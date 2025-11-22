@@ -163,7 +163,6 @@
     ];
 
     const instructions = document.getElementById('instructions');
-    const loading = document.getElementById('loading');
     const videos = [];
     let videosLoaded = 0;
     let arStarted = false;
@@ -238,13 +237,8 @@
     }
 
     function updateLoadingStatus() {
-      // SUPPRIMÉ: Affichage du compteur de chargement X/36
-      // loading.textContent = `Vidéos: ${videosLoaded}/36`;
-      
-      if (videosLoaded >= 36) {
-        setTimeout(() => {
-          loading.classList.add('hidden');
-        }, 500); // Délai réduit
+      if (videosLoaded >= videoConfigs.length) {
+        console.log('✅ Toutes les vidéos sont prêtes');
       }
     }
 
@@ -255,7 +249,12 @@
       try {
         // Demander l'accès caméra explicitement
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'environment' },
+          // Contrainte plus agressive pour obtenir un flux HD quand dispo
+          video: {
+            facingMode: 'environment',
+            width: { ideal: 1920, min: 1280 },
+            height: { ideal: 1080, min: 720 }
+          },
           audio: false
         });
         console.log('✓ Caméra autorisée');

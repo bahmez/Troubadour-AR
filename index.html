@@ -11,7 +11,7 @@
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  
+
   <!-- Import du fichier CSS externe -->
   <link rel="stylesheet" href="css/style.css">
 
@@ -29,7 +29,6 @@
   <!-- <div id="debug-info">En attente du démarrage...</div> -->
   <!-- <button id="debug-toggle" style="display: none;">🔄 AUTO</button> -->
   
-  <div id="loading" class="hidden">Chargement...</div>
   <div id="instructions" class="hidden">📸 Pointez sur une image du livre</div>
 
   <a-scene id="ar-scene" mindar-image="imageTargetSrc: ./targets.mind; filterMinCF: 0.0001; filterBeta: 0.01; warmupTolerance: 2; missTolerance: 10; autoStart: false;" renderer="colorManagement: false; antialias: true; alpha: true;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" embedded="" inspector="" keyboard-shortcuts="" screenshot="">
