@@ -1,0 +1,36 @@
+steps:
+  # Build the container image
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - gcr.io/$PROJECT_ID/troubadour-ar
+      - .
+
+  # Push the image to Artifact Registry / Container Registry
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - gcr.io/$PROJECT_ID/troubadour-ar
+
+  # Deploy to Cloud Run
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - troubadour-ar
+      - --image
+      - gcr.io/$PROJECT_ID/troubadour-ar
+      - --region
+      - $_REGION
+      - --platform
+      - managed
+      - --allow-unauthenticated
+
+images:
+  - gcr.io/$PROJECT_ID/troubadour-ar
+
+substitutions:
+  _REGION: europe-west1
+
