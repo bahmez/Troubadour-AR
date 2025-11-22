@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
+<!-- saved from url=(0055)https://darkgoldenrod-swallow-718889.hostingersite.com/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
@@ -11,123 +11,10 @@
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  
+  <!-- Import du fichier CSS externe -->
+  <link rel="stylesheet" href="css/style.css">
 
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      position: fixed;
-    }
-
-    a-scene {
-      width: 100% !important;
-      height: 100% !important;
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-    }
-
-    canvas {
-      width: 100% !important;
-      height: 100% !important;
-    }
-
-    #start-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-
-    #start-overlay h1 {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-
-    #start-overlay p {
-      font-size: 14px;
-      margin-bottom: 30px;
-      opacity: 0.9;
-    }
-
-    #start-button {
-      background: white;
-      color: #667eea;
-      border: none;
-      padding: 15px 40px;
-      border-radius: 30px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      transition: transform 0.2s;
-    }
-
-    #start-button:active {
-      transform: scale(0.95);
-    }
-
-    #debug-info {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 10px;
-      z-index: 1001;
-      max-width: 200px;
-    }
-
-    #instructions {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.85);
-      color: white;
-      padding: 12px 20px;
-      border-radius: 20px;
-      font-size: 13px;
-      z-index: 1000;
-      text-align: center;
-      max-width: 85%;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-
-    #loading {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 6px 12px;
-      border-radius: 12px;
-      font-size: 10px;
-      z-index: 1001;
-      backdrop-filter: blur(10px);
-    }
-
-    .hidden {
-      display: none !important;
-    }
-  </style>
 </head>
 <body>
   <!-- Écran de démarrage -->
@@ -135,463 +22,241 @@
     <h1>📚 Livre AR Maurice</h1>
     <p>Pointez votre caméra sur les images du livre<br>pour découvrir les vidéos interactives</p>
     <button id="start-button">Démarrer l'expérience</button>
-    <div id="platform-info" style="margin-top: 20px; font-size: 11px; opacity: 0.7;"></div>
+    <div id="platform-info" style="margin-top: 20px; font-size: 11px; opacity: 0.7;">Plateforme: Autre</div>
   </div>
 
-  <div id="debug-info"></div>
+  <!-- Éléments de debug visuels supprimés comme demandé -->
+  <!-- <div id="debug-info">En attente du démarrage...</div> -->
+  <!-- <button id="debug-toggle" style="display: none;">🔄 AUTO</button> -->
+  
   <div id="loading" class="hidden">Chargement...</div>
   <div id="instructions" class="hidden">📸 Pointez sur une image du livre</div>
 
-  <a-scene
-    id="ar-scene"
-    mindar-image="imageTargetSrc: ./targets.mind; filterMinCF: 0.0001; filterBeta: 0.01; warmupTolerance: 2; missTolerance: 10; autoStart: false;"
-    renderer="colorManagement: false; antialias: true; alpha: true;"
-    vr-mode-ui="enabled: false"
-    device-orientation-permission-ui="enabled: false"
-    embedded>
+  <a-scene id="ar-scene" mindar-image="imageTargetSrc: ./targets.mind; filterMinCF: 0.0001; filterBeta: 0.01; warmupTolerance: 2; missTolerance: 10; autoStart: false;" renderer="colorManagement: false; antialias: true; alpha: true;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" embedded="" inspector="" keyboard-shortcuts="" screenshot="">
 
     <a-assets>
-      <video
-        id="vid0"
-        crossorigin="anonymous"
-        playsinline
-        webkit-playsinline
-        loop
-        muted
-        preload="auto">
-      </video>
-
-      <video
-        id="vid1"
-        crossorigin="anonymous"
-        playsinline
-        webkit-playsinline
-        loop
-        muted
-        preload="auto">
-      </video>
-
-      <video
-        id="vid2"
-        crossorigin="anonymous"
-        playsinline
-        webkit-playsinline
-        loop
-        muted
-        preload="auto">
-      </video>
-
-      <video
-        id="vid3"
-        crossorigin="anonymous"
-        playsinline
-        webkit-playsinline
-        loop
-        muted
-        preload="auto">
-      </video>
-
-      <video
-        id="vid4"
-        crossorigin="anonymous"
-        playsinline
-        webkit-playsinline
-        loop
-        muted
-        preload="auto">
-      </video>
+      <video id="vid0" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid1" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid2" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid3" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid4" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid5" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid6" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid7" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid8" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid9" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid10" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid11" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid12" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid13" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid14" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid15" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid16" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid17" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid18" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid19" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid20" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid21" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid22" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid23" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid24" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid25" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid26" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid27" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid28" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid29" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid30" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid31" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid32" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid33" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid34" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
+      <video id="vid35" crossorigin="anonymous" playsinline="" webkit-playsinline="" loop="" muted="" preload="auto"></video>
     </a-assets>
 
-    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+    <a-camera position="0 0 0" look-controls="enabled: false" camera="" rotation="" wasd-controls=""></a-camera>
 
-    <!-- Target 0: MONTAGNE DU REMPART -->
+    <!-- Target 0: Séquence 1 - MONTAGNE DU REMPART -->
     <a-entity mindar-image-target="targetIndex: 0">
-      <a-plane
-        src="#vid0"
-        width="1"
-        height="0.552"
-        position="0 0 0"
-        rotation="0 0 0"
-        material="side: double"
-        yuv-fix>
-      </a-plane>
+      <a-plane src="#vid0" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
     </a-entity>
 
-    <!-- Target 1: LES SALINES TOP SHOT -->
+    <!-- Target 1: Séquence 2 - LES SALINES TOP SHOT -->
     <a-entity mindar-image-target="targetIndex: 1">
-      <a-plane
-        src="#vid1"
-        width="1"
-        height="0.552"
-        position="0 0 0"
-        rotation="0 0 0"
-        material="side: double"
-        yuv-fix>
-      </a-plane>
+      <a-plane src="#vid1" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
     </a-entity>
 
-    <!-- Target 2: CASCADE SAUVAGE -->
+    <!-- Target 2: Séquence 3 - CASCADE SAUVAGE -->
     <a-entity mindar-image-target="targetIndex: 2">
-      <a-plane
-        src="#vid2"
-        width="1"
-        height="0.552"
-        position="0 0 0"
-        rotation="0 0 0"
-        material="side: double"
-        yuv-fix>
-      </a-plane>
+      <a-plane src="#vid2" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
     </a-entity>
 
-    <!-- Target 3: PIETTER BOTH -->
+    <!-- Target 3: Séquence 4 - PIETTER BOTH -->
     <a-entity mindar-image-target="targetIndex: 3">
-      <a-plane
-        src="#vid3"
-        width="1"
-        height="0.552"
-        position="0 0 0"
-        rotation="0 0 0"
-        material="side: double"
-        yuv-fix>
-      </a-plane>
+      <a-plane src="#vid3" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
     </a-entity>
 
     <!-- Target 4: Séquence 5 -->
     <a-entity mindar-image-target="targetIndex: 4">
-      <a-plane
-        src="#vid4"
-        width="1"
-        height="0.552"
-        position="0 0 0"
-        rotation="0 0 0"
-        material="side: double"
-        yuv-fix>
-      </a-plane>
+      <a-plane src="#vid4" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
     </a-entity>
-  </a-scene>
 
-  <script>
-    // === DÉTECTION PLATEFORME ===
-    const isSafariIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && /Safari/.test(navigator.userAgent) && !/Chrome|CriOS|FxiOS/.test(navigator.userAgent);
-    const isAndroid = /Android/.test(navigator.userAgent);
-    const isChrome = /Chrome/.test(navigator.userAgent);
+    <!-- Target 5: Séquence 6 -->
+    <a-entity mindar-image-target="targetIndex: 5">
+      <a-plane src="#vid5" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-    const platform = isSafariIOS ? 'Safari iOS' : (isAndroid ? 'Android' : 'Autre');
-    console.log(`📱 Plateforme détectée: ${platform}`);
+    <!-- Target 6: Séquence 7 -->
+    <a-entity mindar-image-target="targetIndex: 6">
+      <a-plane src="#vid6" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-    document.getElementById('platform-info').textContent = `Plateforme: ${platform}`;
+    <!-- Target 7: Séquence 8 -->
+    <a-entity mindar-image-target="targetIndex: 7">
+      <a-plane src="#vid7" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-    // === DEBUG INFO ===
-    function updateDebugInfo(text) {
-      const debugEl = document.getElementById('debug-info');
-      debugEl.innerHTML = text;
-      console.log('DEBUG:', text);
-    }
+    <!-- Target 8: Séquence 9 -->
+    <a-entity mindar-image-target="targetIndex: 8">
+      <a-plane src="#vid8" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-    updateDebugInfo('En attente du démarrage...');
+    <!-- Target 9: Séquence 10 -->
+    <a-entity mindar-image-target="targetIndex: 9">
+      <a-plane src="#vid9" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-    // === COMPOSANT A-FRAME POUR FIX SAFARI iOS YUV ===
-    AFRAME.registerComponent('yuv-fix', {
-      schema: {
-        enabled: {type: 'boolean', default: true}
-      },
+    <!-- Target 10: Séquence 11 -->
+    <a-entity mindar-image-target="targetIndex: 10">
+      <a-plane src="#vid10" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-      init: function() {
-        this.applied = false;
-        this.attempts = 0;
-        this.maxAttempts = 150;
+    <!-- Target 11: Séquence 12 -->
+    <a-entity mindar-image-target="targetIndex: 11">
+      <a-plane src="#vid11" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-        console.log('[yuv-fix] Composant initialisé');
-      },
+    <!-- Target 12: Séquence 13 -->
+    <a-entity mindar-image-target="targetIndex: 12">
+      <a-plane src="#vid12" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-      tick: function() {
-        // Uniquement pour Safari iOS
-        if (!isSafariIOS) return;
+    <!-- Target 13: Séquence 14 -->
+    <a-entity mindar-image-target="targetIndex: 13">
+      <a-plane src="#vid13" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-        if (!this.applied && this.attempts < this.maxAttempts) {
-          this.attempts++;
-          this.tryApplyFix();
-        }
-      },
+    <!-- Target 14: Séquence 15 -->
+    <a-entity mindar-image-target="targetIndex: 14">
+      <a-plane src="#vid14" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-      tryApplyFix: function() {
-        const mesh = this.el.getObject3D('mesh');
-        if (!mesh) return;
+    <!-- Target 15: Séquence 16 -->
+    <a-entity mindar-image-target="targetIndex: 15">
+      <a-plane src="#vid15" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-        const material = mesh.material;
-        if (!material) return;
+    <!-- Target 16: Séquence 17 -->
+    <a-entity mindar-image-target="targetIndex: 16">
+      <a-plane src="#vid16" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-        const videoElement = document.querySelector(this.el.getAttribute('src'));
-        if (!videoElement) return;
+    <!-- Target 17: Séquence 18 -->
+    <a-entity mindar-image-target="targetIndex: 17">
+      <a-plane src="#vid17" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-        let videoTexture = material.map;
-        if (!videoTexture || !videoTexture.image) {
-          videoTexture = new THREE.VideoTexture(videoElement);
-          videoTexture.minFilter = THREE.LinearFilter;
-          videoTexture.magFilter = THREE.LinearFilter;
-          videoTexture.format = THREE.RGBFormat;
-        }
+    <!-- Target 18: Séquence 19 -->
+    <a-entity mindar-image-target="targetIndex: 18">
+      <a-plane src="#vid18" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-        this.applyShader(mesh, videoTexture);
-      },
+    <!-- Target 19: Séquence 20 -->
+    <a-entity mindar-image-target="targetIndex: 19">
+      <a-plane src="#vid19" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-      applyShader: function(mesh, videoTexture) {
-        if (this.applied) return;
+    <!-- Target 20: Séquence 21 -->
+    <a-entity mindar-image-target="targetIndex: 20">
+      <a-plane src="#vid20" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-        console.log('🔧 [yuv-fix] Application du shader BGR pour Safari iOS...');
+    <!-- Target 21: Séquence 22 -->
+    <a-entity mindar-image-target="targetIndex: 21">
+      <a-plane src="#vid21" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-        const customMaterial = new THREE.ShaderMaterial({
-          uniforms: {
-            videoTexture: { value: videoTexture }
-          },
-          vertexShader: `
-            varying vec2 vUv;
-            void main() {
-              vUv = uv;
-              gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-            }
-          `,
-          fragmentShader: `
-            uniform sampler2D videoTexture;
-            varying vec2 vUv;
+    <!-- Target 22: Séquence 23 -->
+    <a-entity mindar-image-target="targetIndex: 22">
+      <a-plane src="#vid22" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-            void main() {
-              // Fix Safari iOS: WebKit fournit BGR au lieu de RGB
-              // Swap manuel des canaux R et B
-              vec4 color = texture2D(videoTexture, vUv);
-              gl_FragColor = vec4(color.b, color.g, color.r, color.a);
-            }
-          `,
-          side: THREE.DoubleSide,
-          transparent: false
-        });
+    <!-- Target 23: Séquence 25 (Note: séquence 24 baleine manquante) -->
+    <a-entity mindar-image-target="targetIndex: 23">
+      <a-plane src="#vid23" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-        mesh.material = customMaterial;
-        this.applied = true;
+    <!-- Target 24: Séquence 26 -->
+    <a-entity mindar-image-target="targetIndex: 24">
+      <a-plane src="#vid24" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-        console.log('✅ [yuv-fix] Shader BGR Safari iOS appliqué');
-        updateDebugInfo('Shader: ✓ (BGR fix)');
-      }
-    });
+    <!-- Target 25: Séquence 27 -->
+    <a-entity mindar-image-target="targetIndex: 25">
+      <a-plane src="#vid25" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-    // === CONFIGURATION VIDÉOS ===
-    const videoConfigs = [
-      { id: 'vid0', url: 'https://customer-00y5dtvdulpki0l5.cloudflarestream.com/9a42e2ea5a38a25012d90f1816cad32f/manifest/video.m3u8' },
-      { id: 'vid1', url: 'https://customer-00y5dtvdulpki0l5.cloudflarestream.com/fd57736b9afe3a2c2b939d4206536894/manifest/video.m3u8' },
-      { id: 'vid2', url: 'https://customer-00y5dtvdulpki0l5.cloudflarestream.com/cd268be7086f84fc80cfbc29c5965592/manifest/video.m3u8' },
-      { id: 'vid3', url: 'https://customer-00y5dtvdulpki0l5.cloudflarestream.com/0701376f8124bd8f489450d7375310c6/manifest/video.m3u8' },
-      { id: 'vid4', url: 'https://customer-00y5dtvdulpki0l5.cloudflarestream.com/d5366edf44b4fdf95c300b206c89e76b/manifest/video.m3u8' }
-    ];
+    <!-- Target 26: Séquence 28 -->
+    <a-entity mindar-image-target="targetIndex: 26">
+      <a-plane src="#vid26" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-    const instructions = document.getElementById('instructions');
-    const loading = document.getElementById('loading');
-    const videos = [];
-    let videosLoaded = 0;
-    let arStarted = false;
+    <!-- Target 27: Séquence 29 -->
+    <a-entity mindar-image-target="targetIndex: 27">
+      <a-plane src="#vid27" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-    function setupVideo(config) {
-      const videoElement = document.getElementById(config.id);
-      videos.push(videoElement);
+    <!-- Target 28: Séquence 30 -->
+    <a-entity mindar-image-target="targetIndex: 28">
+      <a-plane src="#vid28" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-      if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
-        console.log(`[${config.id}] HLS natif Safari iOS`);
-        videoElement.src = config.url;
+    <!-- Target 29: Séquence 31 -->
+    <a-entity mindar-image-target="targetIndex: 29">
+      <a-plane src="#vid29" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-        videoElement.addEventListener('loadedmetadata', () => {
-          console.log(`✓ [${config.id}] OK`);
-          videosLoaded++;
-          updateLoadingStatus();
-        });
+    <!-- Target 30: Séquence 32 -->
+    <a-entity mindar-image-target="targetIndex: 30">
+      <a-plane src="#vid30" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-      } else if (Hls.isSupported()) {
-        console.log(`[${config.id}] HLS.js`);
-        const hls = new Hls({
-          enableWorker: true,
-          lowLatencyMode: false,
-          backBufferLength: 90,
-          maxBufferLength: 30,
-          maxMaxBufferLength: 60,
-          startLevel: -1
-        });
+    <!-- Target 31: Séquence 33 -->
+    <a-entity mindar-image-target="targetIndex: 31">
+      <a-plane src="#vid31" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-        hls.loadSource(config.url);
-        hls.attachMedia(videoElement);
+    <!-- Target 32: Séquence 34 -->
+    <a-entity mindar-image-target="targetIndex: 32">
+      <a-plane src="#vid32" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-        hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
-          console.log(`✓ [${config.id}] OK (${data.levels.length} qualités)`);
-          videosLoaded++;
-          updateLoadingStatus();
-        });
+    <!-- Target 33: Séquence 35 -->
+    <a-entity mindar-image-target="targetIndex: 33">
+      <a-plane src="#vid33" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-        hls.on(Hls.Events.ERROR, (event, data) => {
-          if (data.fatal) {
-            console.error(`✗ [${config.id}] Erreur:`, data.details);
-          }
-        });
+    <!-- Target 34: Séquence 36 -->
+    <a-entity mindar-image-target="targetIndex: 34">
+      <a-plane src="#vid34" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
 
-      } else {
-        console.warn(`✗ [${config.id}] HLS non supporté`);
-        videosLoaded++;
-        updateLoadingStatus();
-      }
-    }
+    <!-- Target 35: Séquence 37 -->
+    <a-entity mindar-image-target="targetIndex: 35">
+      <a-plane src="#vid35" width="1" height="0.552" position="0 0 0" rotation="0 0 0" material="side: double" yuv-fix="" geometry=""></a-plane>
+    </a-entity>
+  <canvas class="a-canvas" data-aframe-canvas="true" data-engine="three.js r147" width="1336" height="911"></canvas><div class="a-loader-title" style="display: none;">Livre AR - Maurice</div><a-entity light="" data-aframe-default-light="" aframe-injected=""></a-entity><a-entity light="" position="" data-aframe-default-light="" aframe-injected=""></a-entity></a-scene>
 
-    function updateLoadingStatus() {
-      loading.textContent = `Vidéos: ${videosLoaded}/5`;
-      updateDebugInfo(`Vidéos: ${videosLoaded}/5<br>AR: ${arStarted ? '✓' : '...'}`);
+  <!-- Import du script JS externe -->
+  <script src="js/script.js"></script>
 
-      if (videosLoaded >= 5) {
-        setTimeout(() => {
-          loading.classList.add('hidden');
-        }, 2000);
-      }
-    }
-
-    // === DÉMARRAGE MANUEL ===
-    document.getElementById('start-button').addEventListener('click', async () => {
-      console.log('🚀 Démarrage de l\'expérience AR...');
-      updateDebugInfo('Démarrage AR...');
-
-      try {
-        // Demander l'accès caméra explicitement
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'environment' },
-          audio: false
-        });
-        console.log('✓ Caméra autorisée');
-        updateDebugInfo('Caméra: ✓<br>Chargement...');
-
-        // Arrêter le stream temporaire (MindAR va créer le sien)
-        stream.getTracks().forEach(track => track.stop());
-
-        // Masquer l'overlay
-        document.getElementById('start-overlay').classList.add('hidden');
-        instructions.classList.remove('hidden');
-        loading.classList.remove('hidden');
-
-        // Charger les vidéos
-        videoConfigs.forEach(config => setupVideo(config));
-
-        // Démarrer MindAR
-        const sceneEl = document.querySelector('a-scene');
-
-        // Fonction pour démarrer l'AR
-        const startAR = () => {
-          console.log('✓ Démarrage de MindAR...');
-          updateDebugInfo('Démarrage MindAR...');
-
-          // Démarrer MindAR manuellement
-          const mindARSystem = sceneEl.systems['mindar-image-system'];
-          if (mindARSystem) {
-            try {
-              mindARSystem.start();
-              console.log('✓ MindAR démarré');
-              arStarted = true;
-              updateDebugInfo(`Vidéos: ${videosLoaded}/5<br>AR: ✓<br>Plateforme: ${platform}`);
-
-              // FIX: Forcer le redimensionnement du canvas après démarrage
-              setTimeout(() => {
-                const canvas = document.querySelector('canvas');
-                if (canvas) {
-                  canvas.style.width = '100%';
-                  canvas.style.height = '100%';
-                  canvas.style.position = 'fixed';
-                  canvas.style.top = '0';
-                  canvas.style.left = '0';
-                  console.log('✓ Canvas redimensionné');
-                }
-
-                // Forcer le resize de la scène A-Frame
-                sceneEl.resize();
-                window.dispatchEvent(new Event('resize'));
-              }, 500);
-            } catch (err) {
-              console.error('✗ Erreur MindAR:', err);
-              updateDebugInfo('Erreur MindAR:<br>' + err.message);
-            }
-          } else {
-            console.error('✗ MindAR system introuvable');
-            updateDebugInfo('Erreur: MindAR non trouvé');
-          }
-
-          // Gestion des targets
-          const targets = document.querySelectorAll('[mindar-image-target]');
-
-          targets.forEach((target, index) => {
-            target.addEventListener('targetFound', () => {
-              console.log(`🎯 Target ${index} détectée`);
-              instructions.textContent = `✅ Lecture de la vidéo ${index + 1}`;
-              instructions.style.background = 'rgba(0, 200, 0, 0.85)';
-
-              const video = videos[index];
-              if (video) {
-                video.play().then(() => {
-                  console.log(`▶ Vidéo ${index} en lecture`);
-                }).catch(err => {
-                  console.error(`✗ Erreur lecture: ${err.message}`);
-                  video.muted = true;
-                  video.play();
-                });
-              }
-            });
-
-            target.addEventListener('targetLost', () => {
-              console.log(`Target ${index} perdue`);
-              instructions.textContent = '📸 Pointez sur une image du livre';
-              instructions.style.background = 'rgba(0, 0, 0, 0.85)';
-
-              const video = videos[index];
-              if (video) {
-                video.pause();
-                video.currentTime = 0;
-              }
-            });
-          });
-        };
-
-        // Si la scène est déjà chargée, démarrer immédiatement
-        if (sceneEl.hasLoaded) {
-          console.log('✓ Scène déjà chargée');
-          startAR();
-        } else {
-          // Sinon, attendre qu'elle charge
-          sceneEl.addEventListener('loaded', () => {
-            console.log('✓ Scène A-Frame prête');
-            startAR();
-          });
-        }
-
-      } catch (error) {
-        console.error('✗ Erreur accès caméra:', error);
-        alert(`Erreur: Impossible d'accéder à la caméra.\n\n${error.message}\n\nVeuillez autoriser l'accès à la caméra dans les paramètres de votre navigateur.`);
-        updateDebugInfo('Erreur caméra:<br>' + error.message);
-      }
-    });
-
-    // === GESTION REDIMENSIONNEMENT ===
-    window.addEventListener('resize', () => {
-      const sceneEl = document.querySelector('a-scene');
-      if (sceneEl && arStarted) {
-        sceneEl.resize();
-        const canvas = document.querySelector('canvas');
-        if (canvas) {
-          canvas.style.width = '100%';
-          canvas.style.height = '100%';
-        }
-        console.log('↔ Écran redimensionné');
-      }
-    });
-
-    window.addEventListener('orientationchange', () => {
-      setTimeout(() => {
-        window.dispatchEvent(new Event('resize'));
-      }, 200);
-    });
-
-    window.addEventListener('error', (e) => {
-      console.error('⚠ Erreur globale:', e.message);
-      updateDebugInfo('Erreur: ' + e.message);
-    });
-  </script>
-</body>
-</html>
+</body></html>
